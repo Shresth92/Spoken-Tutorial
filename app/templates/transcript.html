@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/product/">
+
+    <title>Speaky</title>
+
+    <style>
+        .container {
+            max-width: 960px;
+        }
+
+        .site-header {
+            background-color: rgba(0, 0, 0, .85);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        .site-header a {
+            color: #999;
+            transition: ease-in-out color .15s;
+        }
+
+        .site-header a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Speaky</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="transcript">Transcript to MP3</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="merge">Merge MP3 and MP4</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-5 border border-success rounded">
+        <form action="transcript" method="post"> {% csrf_token %}
+            <h1 class="text-center">Convert Transcript to Audio</h1>
+            <div class="form-group row my-4">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    <input name="topic" type="text" class="form-control" id="inputEmail3" placeholder="Topic">
+                </div>
+            </div>
+            <div class="form-group row my-4">
+                <label for="fulltrans" class="col-sm-2 col-form-label">Transcript</label>
+                <div class="col-sm-10">
+                    <textarea name="trans" class="form-control" id="fulltrans" rows="7"
+                        placeholder="Transcript"></textarea>
+                </div>
+            </div>
+            <fieldset class="form-group my-4">
+                <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Voice Type</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input name="voice" class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                value="male" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                                Male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="voice" class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                                value="female">
+                            <label class="form-check-label" for="gridRadios2">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group row my-4">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-outline-secondary col-md-7 p-lg-3 my-2">Convert</button>
+                </div>
+            </div>
+            {%if topic%}
+            <div class="col-md-12 text-center" target="_blank">
+                <a href="http://127.0.0.1:8000/media/audios/{{path}}">
+                    <button type="button" class="btn btn-outline-secondary col-md-7 p-lg-3 my-2">Preview</button></a>
+            </div>
+            {% endif%}
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
