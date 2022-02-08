@@ -34,9 +34,15 @@ def merge(request):
         document.save()
         videol = "app\\media\\videos\\"+topic+"\\"+str(video)
         audiol = "app\\media\\videos\\"+topic+"\\"+str(audio)
-        outl = "app\\media\\videomergeout\\"+topic+".mp4"
-        output = "ffmpeg -i "+videol+" -i "+audiol+" -shortest "+outl
-        os.system(output)
+        no_sound = "ffmpeg -i "+ videol+" -an -c copy app\\media\\no_sound\\"+topic+".mp4" #Remve Audio from video
+        os.system(no_sound)
+        videol = "app\\media\\no_sound\\"+topic+".mp4"
+        merge_location = "app\\media\\merge\\"+topic+".mp4"
+        merge_output = "ffmpeg -i "+videol+" -i "+audiol+" -shortest "+ merge_location
+        os.system(merge_output)
+        compress_location = "app\\media\\videomergeout\\"+topic+".mp4"
+        compress = "ffmpeg -i "+merge_location+" -c:v libx264 -crf 24 -b:v 1M -c:a aac "+ compress_location
+        os.system(compress)
         params = {'topic': topic+".mp4"}
         return render(request, 'merge.html',params)
     return render(request, 'merge.html')
